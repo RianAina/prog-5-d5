@@ -42,13 +42,13 @@ class CoffeeMachine {
     }
 
     demarrer() {
-        console.log(" Démarrage de la machine à café...");
+        console.log("Démarrage de la machine à café...");
         this.etat = EtatMachine.EN_FONCTION;
         this.bouclePrincipale();
     }
 
     afficherMenu() {
-        console.log("Menu des boissons :");
+        console.log("\nMenu des boissons :");
         this.menu.forEach((boisson, index) => {
             console.log(`${index + 1}. ${boisson.nom} - ${boisson.prix.toFixed(2)} € (${boisson.stock} en stock)`);
         });
@@ -57,37 +57,37 @@ class CoffeeMachine {
     demanderBoisson() {
         const choix = parseInt(prompt("\nEntrez le numéro de la boisson souhaitée : "));
         if (isNaN(choix) || choix < 1 || choix > this.menu.length) {
-            throw new Error(" Choix invalide.");
+            throw new Error("Choix invalide.");
         }
         return this.menu[choix - 1];
     }
 
     verifierEtatMachine() {
         if (this.reservoirEau <= 0) {
-            throw new Error(" Réservoir d’eau vide. Maintenance requise.");
+            throw new Error("Réservoir d’eau vide. Maintenance requise.");
         }
         if (this.bacDechets >= this.LIMITE_BAC_DECHETS) {
-            throw new Error(" Bac à déchets plein. Maintenance requise.");
+            throw new Error("Bac à déchets plein. Maintenance requise.");
         }
     }
 
     demanderPaiement(prix) {
         const montant = parseFloat(prompt(`Insérez ${prix.toFixed(2)} € : `));
         if (isNaN(montant) || montant < prix) {
-            throw new Error(" Montant insuffisant.");
+            throw new Error("Montant insuffisant.");
         }
         const rendu = (montant - prix).toFixed(2);
         if (rendu > 0) {
-            console.log(` Rendu : ${rendu} €`);
+            console.log(`Rendu : ${rendu} €`);
         }
     }
 
     preparerBoisson(boisson) {
-        console.log(`☕ Préparation de votre ${boisson.nom}...`);
+        console.log(`Préparation de votre ${boisson.nom}...`);
         boisson.servir();
         this.reservoirEau -= 0.2; // consommation d'eau
         this.bacDechets += 1;
-        console.log(" Boisson servie. Bonne dégustation !");
+        console.log("Boisson servie. Bonne dégustation.");
     }
 
     bouclePrincipale() {
@@ -98,7 +98,7 @@ class CoffeeMachine {
                 const boisson = this.demanderBoisson();
 
                 if (!boisson.estDisponible()) {
-                    throw new Error(" Boisson en rupture de stock.");
+                    throw new Error("Boisson en rupture de stock.");
                 }
 
                 this.demanderPaiement(boisson.prix);
@@ -110,7 +110,7 @@ class CoffeeMachine {
             const continuer = prompt("\nSouhaitez-vous commander une autre boisson ? (o/n) : ").toLowerCase();
             if (continuer !== 'o') {
                 this.etat = EtatMachine.ETEINTE;
-                console.log(" Merci d’avoir utilisé la machine à café. À bientôt !");
+                console.log("Merci d’avoir utilisé la machine à café. À bientôt.");
             }
         }
     }
